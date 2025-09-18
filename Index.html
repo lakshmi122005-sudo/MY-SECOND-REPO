@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Smart Workout Posture Detection</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #f0f3f7;
+      color: #333;
+    }
+    header {
+      background: #2c3e50;
+      color: #fff;
+      padding: 15px 20px;
+      text-align: center;
+    }
+    .container {
+      display: flex;
+      flex-direction: row;
+      height: calc(100vh - 60px);
+    }
+    .video-section {
+      flex: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: #ecf0f1;
+      padding: 20px;
+    }
+    video {
+      border: 3px solid #2c3e50;
+      border-radius: 8px;
+      max-width: 90%;
+      max-height: 70vh;
+    }
+    .status {
+      margin-top: 20px;
+      padding: 15px 20px;
+      border-radius: 6px;
+      background: #fff;
+      font-weight: bold;
+      font-size: 1.1em;
+      text-align: center;
+      width: 80%;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+    .good {
+      color: #27ae60;
+      border: 2px solid #27ae60;
+    }
+    .bad {
+      color: #c0392b;
+      border: 2px solid #c0392b;
+    }
+    .sidebar {
+      flex: 1;
+      background: #ffffff;
+      padding: 20px;
+      border-left: 2px solid #ddd;
+      overflow-y: auto;
+    }
+    .sidebar h2 {
+      margin-top: 0;
+      color: #2c3e50;
+    }
+    .exercise {
+      margin-bottom: 15px;
+      padding: 12px;
+      background: #f8f9fa;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+    .exercise strong {
+      color: #34495e;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Smart Workout Posture Detection and Guidance</h1>
+  </header>
+  <div class="container">
+    <section class="video-section">
+      <video id="webcam" autoplay playsinline></video>
+      <div id="status" class="status">Initializing detection...</div>
+    </section>
+    <aside class="sidebar">
+      <h2>Workout Guidance</h2>
+      <div class="exercise">
+        <strong>Squats:</strong> Keep your back straight and knees above ankles.
+      </div>
+      <div class="exercise">
+        <strong>Push-ups:</strong> Keep your spine aligned and avoid sagging hips.
+      </div>
+      <div class="exercise">
+        <strong>Lunges:</strong> Ensure your front knee doesn’t go past your toes.
+      </div>
+      <div class="exercise">
+        <strong>Planks:</strong> Maintain a straight line from shoulders to ankles.
+      </div>
+    </aside>
+  </div>
+
+  <script>
+    const video = document.getElementById('webcam');
+    const statusBox = document.getElementById('status');
+
+    // Access the webcam
+    async function initWebcam() {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        video.srcObject = stream;
+      } catch (err) {
+        statusBox.textContent = "Webcam access denied or unavailable.";
+        statusBox.className = "status bad";
+        console.error(err);
+      }
+    }
+
+    initWebcam();
+
+    // Simulated posture detection logic (replace with ML model)
+    function simulateDetection() {
+      const isGoodPosture = Math.random() > 0.5; // Random for demo
+      if (isGoodPosture) {
+        statusBox.textContent = "Good Posture ✅ Keep Going!";
+        statusBox.className = "status good";
+      } else {
+        statusBox.textContent = "Bad Posture ❌ Adjust Position!";
+        statusBox.className = "status bad";
+      }
+    }
+
+    setInterval(simulateDetection, 3000); // Every 3s
+  </script>
+</body>
+</html>
